@@ -46,7 +46,16 @@ var config = {
                 display: true,
                 scaleLabel: {
                     display: true,
-                    labelString: 'Data - Hora'
+                    labelString: 'Tempo'
+                },
+                time: {
+                    tooltipFormat: 'DD/MM/YYYY H:mm:ss',
+                    displayFormats: {
+                        millisecond: 'H:mm:ss.SSS',
+                        second: 'H:mm:ss',
+                        minute: 'H:mm',
+                        hour: 'H[h]'
+                    }
                 }
             }],
             yAxes: [{
@@ -54,6 +63,9 @@ var config = {
                 scaleLabel: {
                     display: true,
                     labelString: 'Valor'
+                },
+                ticks: {
+                    suggestedMax: 60
                 }
             }]
         }
