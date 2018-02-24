@@ -3,40 +3,18 @@
 <head>
 	<title>Teste</title>
 </head>
-<body>
-	<h1>Estação meteorológica simples :)</h1>
-    <p>T: <span class="temperature"></span> </p>
-    <p>U: <span class="umidity"></span></p>
-    <p>L: <span class="luminosity"></span></p>
+<body> 
+    <div style="width:100%">
+        <canvas id="chart">
+
+        </canvas>
+    </div>
+
     <script src="./lib/jquery/jquery-3.3.1.js"></script>
+    <script src="./lib/Chart.bundle.js"></script>
+    <script src="./lib/moment-with-locales.min.js"></script>
     <script src="./lib/socket.io-client-2.0.3/dist/socket.io.js"></script>
-    <script>
-        var socket = io();
-
-        socket.on('connect', (data) => {
-            socket.emit('join', 'I\'m alive!');
-        });
-
-
-        $(document).ready(function() {
-            socket.on('temperature', (data) => {
-                console.log(data);
-                data = JSON.parse(data);
-                $('.temperature').text(data.value);
-            });
-
-            socket.on('umidity', (data) => {
-                console.log(data);
-                data = JSON.parse(data);
-                $('.umidity').text(data.value);
-            });
-
-            socket.on('luminancy', (data) => {
-                console.log(data);
-                data = JSON.parse(data);
-                $('.luminosity').text(data.value);
-            });
-        })
-    </script>
+    <script src="./util.js"></script>
+    <script src="./index.js"></script>
 </body>
 </html>
