@@ -1,77 +1,5 @@
 var socket = io();
 
-var getConfig = function(label, color) {
-    return {
-        label: label,
-        backgroundColor: window.chartColors[color],
-        borderColor: window.chartColors[color],
-        data: [],
-        fill: false
-    };
-};
-
-var  temperatureDataset = getConfig('Temperatura', 'red'),
-     umidityDataset = getConfig('Umidade', 'blue'),
-     luminancyDataset = getConfig('Luminosidade', 'yellow');
-
-var config = {
-    type: 'line',
-    data: {
-        datasets: [
-            temperatureDataset,
-            umidityDataset,
-            luminancyDataset
-        ],
-    },
-    options: {
-        responsive: true,
-        tooltips: {
-            mode: 'index',
-            intersect: false
-        },
-        hover: {
-            mode: 'index',
-            intersect: false
-        },
-        elements: {
-            point: { radius: 0 }
-        },
-        title: {
-            display: true,
-            text: 'Temperatura (ºC), umidade (%) e luminância (Lux)'
-        },
-        scales: {
-            xAxes: [{
-                type: 'time',
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Tempo'
-                },
-                time: {
-                    tooltipFormat: 'DD/MM/YYYY H:mm:ss',
-                    displayFormats: {
-                        millisecond: 'H:mm:ss.SSS',
-                        second: 'H:mm:ss',
-                        minute: 'H:mm',
-                        hour: 'H[h]'
-                    }
-                }
-            }],
-            yAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Valor'
-                },
-                ticks: {
-                    suggestedMax: 60
-                }
-            }]
-        }
-    }
-};
-
 socket.on('connect', (data) => {
     socket.emit('join', 'I\'m alive!');
 });
@@ -85,7 +13,7 @@ window.onload = function() {
 
         temperatureDataset.data.push(data);
 
-        window.myLine.update();
+        window.lines[0].update();
     });
 
     socket.on('umidity', (data) => {
@@ -96,7 +24,7 @@ window.onload = function() {
 
         umidityDataset.data.push(data);
 
-        window.myLine.update();
+        window.lines[1].update();
     });
 
     socket.on('luminancy', (data) => {
@@ -107,11 +35,19 @@ window.onload = function() {
 
         luminancyDataset.data.push(data);
 
-        window.myLine.update();
+        window.lines[2].update();
     });
 
-    var ctx = document.getElementById('chart').getContext('2d');
-    console.log(config);
-    window.myLine = new Chart(ctx, config);
+	var ctx = [
+		document.getElementById('temperature').getContext('2d'),
+		document.getElementById('umidity').getContext('2d'),
+		document.getElementById('luminancy').getContext('2d')
+	];
+
+	window.lines = [];
+
+	ctx.forEach((ctx, ndx) => {
+		window.lines.push(new Chart(ctx, config[ndx]));
+	});
 };
 

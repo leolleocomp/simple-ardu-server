@@ -2,13 +2,32 @@
 <html>
 <head>
 	<title>Estação meteorológica simples (SMS)</title>
+	<link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 <body>
-    <div style="width:100%">
-        <canvas id="chart">
+	<div class="container column flex-2">
+		<div class="container row child flex-1">
+			<div class="child">
+				<canvas id="umidity">
 
-        </canvas>
-    </div>
+				</canvas>
+			</div>
+
+			<div class="child">
+				<canvas id="temperature">
+
+				</canvas>
+			</div>
+		</div>
+
+		<div class="container row child flex-1">
+			<div class="child">
+				<canvas id="luminancy">
+
+				</canvas>
+			</div>
+		</div>
+	</div>
 
     <script src="./lib/jquery/jquery-3.3.1.js"></script>
     <script src="./lib/Chart.bundle.js"></script>
